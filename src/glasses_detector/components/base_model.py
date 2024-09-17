@@ -566,7 +566,7 @@ class BaseGlassesModel(PredInterface):
             )
         else:
             # Load weights from local path
-            weights = torch.load(path_or_url, map_location=self.device)
+            weights = torch.load(path_or_url, map_location=self.device, weights_only=True)
 
         # Actually load the weights
         self.model.load_state_dict(weights)
