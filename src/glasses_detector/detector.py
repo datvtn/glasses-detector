@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
-from typing import Callable, ClassVar, Collection, overload, override
+from typing import Callable, ClassVar, Collection, overload
+from typing_extensions import override
 
 import numpy as np
 import torch

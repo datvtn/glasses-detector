@@ -101,20 +101,36 @@
         :data:`~typing.Any`
 """
 from enum import Enum, auto
-from typing import Any, Iterable, Self, TypeGuard
+from typing import Any, Iterable, Self, TypeGuard, Union, TypeVar
 
 import numpy as np
 import torch
 from PIL import Image
 
-type Scalar = bool | int | float | str | np.generic | np.ndarray | torch.Tensor
-type Tensor = Iterable[Scalar | Tensor] | Image.Image
-type Default = Scalar | Tensor
-type StandardScalar = bool | int | float | str
-type StandardTensor = list[StandardScalar | StandardTensor]
-type StandardDefault = StandardScalar | StandardTensor
-type NonDefault[T] = T
-type Anything = Default | NonDefault
+# Define Scalar type
+Scalar = bool | int | float | str | np.generic | np.ndarray | torch.Tensor
+
+# Define Tensor type
+Tensor = Iterable[Union[Scalar, "Tensor"]] | Image.Image
+
+# Define Default type
+Default = Scalar | Tensor
+
+# Define StandardScalar type
+StandardScalar = bool | int | float | str
+
+# Define StandardTensor type
+StandardTensor = list[Union[StandardScalar, "StandardTensor"]]
+
+# Define StandardDefault type
+StandardDefault = StandardScalar | StandardTensor
+
+# Define NonDefault generic type
+T = TypeVar("T")
+NonDefault = T
+
+# Define Anything type
+Anything = Default | NonDefault
 
 
 class PredType(Enum):

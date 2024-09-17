@@ -15,15 +15,19 @@ import functools
 import imghdr
 import os
 import typing
-from typing import Any, Callable, Iterable, TypeGuard, overload
+from typing import Any, Union, Callable, Iterable, TypeGuard, overload, TypeVar, ParamSpec
 from urllib.parse import urlparse
 
 import torch
 
-type FilePath = str | bytes | os.PathLike
+FilePath = Union[str, bytes, os.PathLike]
 
 
-class copy_signature[**P, T]:
+P = ParamSpec("P")
+T = TypeVar("T")
+F = TypeVar("F", bound=Callable)
+
+class copy_signature:
     """Decorator to copy a function's or a method's signature.
 
     This decorator takes a callable and copies its signature to the
@@ -52,10 +56,12 @@ class copy_signature[**P, T]:
     """
 
     def __init__(self, source: Callable[P, T]):
-        # The source callable
-        self.source = source
+        """Initialize the decorator with the source callable."""
+        self.source = source  # The source callable whose signature we copy
 
     def __call__(self, target: Callable[..., T]) -> Callable[P, T]:
+        """Apply the decorator to the target function."""
+        # Copy the signature and other metadata from the source function to the target
         @functools.wraps(self.source)
         def wrapped(*args: P.args, **kwargs: P.kwargs) -> T:
             return target(*args, **kwargs)
@@ -102,7 +108,7 @@ class eval_infer_mode:
         self.model = model
         self.was_training = model.training
 
-    def __call__[F](self, func: F) -> F:
+    def __call__(self, func: F) -> F:
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
             with self:
@@ -144,14 +150,12 @@ def is_url(x: str) -> bool:
 
 
 @overload
-def flatten[T](items: T) -> T: ...
-
-
+def flatten(items: T) -> T: ...
+    
 @overload
-def flatten[T](items: typing.Iterable[T | typing.Iterable]) -> list[T]: ...
+def flatten(items: Iterable[T | Iterable]) -> list[T]: ...
 
-
-def flatten[T](items: T | Iterable[T | Iterable]) -> T | list[T]:
+def flatten(items: T | Iterable[T | Iterable]) -> T | list[T]:
     """Flatten a nested list.
 
     This function takes any nested iterable and returns a flat list.

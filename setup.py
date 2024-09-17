@@ -211,5 +211,5 @@ setuptools.setup(
             "glasses-detector=glasses_detector.__main__:main",
         ]
     },
-    python_requires=">=3.12",
+    python_requires=">=3.11",
 )

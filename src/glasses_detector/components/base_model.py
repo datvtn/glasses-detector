@@ -11,8 +11,8 @@ from typing import (
     Iterable,
     Self,
     overload,
-    override,
 )
+from typing_extensions import override
 
 import numpy as np
 import torch

@@ -48,10 +48,10 @@ def parse_kwargs():
         default=None,
         choices=(ch := [".txt", ".csv", ".json", ".npy", ".pkl", ".jpg", ".png"]),
         help=f"Only used if `--output` is a directory. The extension to "
-        f"use to save the predictions as files. Common extensions include: "
-        f"{", ".join([f"{c}" for c in ch])}. If not specified, it will be set "
-        f"automatically to .jpg for image predictions and to .txt for all "
-        f"other formats. Defaults to None.",
+            f"use to save the predictions as files. Common extensions include: "
+            f"{', '.join([f'{c}' for c in ch])}. If not specified, it will be set "
+            f"automatically to .jpg for image predictions and to .txt for all "
+            f"other formats. Defaults to None.",
     )
     parser.add_argument(
         "-f",
@@ -92,10 +92,10 @@ def parse_kwargs():
             "segmentation:smart",
         ]),
         help=f"The kind of task the model should perform. One of "
-        f"{", ".join([f"{c}" for c in ch])}. If specified only as "
-        f"classification, detection, or segmentation, the subcategories "
-        f"anyglasses, worn, and smart will be chosen, respectively. Defaults "
-        f"to classification:anyglasses.",
+            f"{', '.join([c for c in ch])}. If specified only as "
+            f"classification, detection, or segmentation, the subcategories "
+            f"anyglasses, worn, and smart will be chosen, respectively. Defaults "
+            f"to classification:anyglasses.",
     )
     parser.add_argument(
         "-s",
