@@ -225,7 +225,7 @@ class GlassesSegmenter(BaseGlassesModel):
             case "tinysegnet_v1":
                 m = TinyBinarySegmenter()
             case "lraspp_mobilenet_v3_large":
-                m = lraspp_mobilenet_v3_large(num_classes=1)
+                m = lraspp_mobilenet_v3_large(num_classes=1, weights_backbone=None)
             case "fcn_resnet101":
                 m = fcn_resnet101()
                 m.classifier[-1] = nn.Conv2d(512, 1, 1)
